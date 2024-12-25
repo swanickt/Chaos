@@ -8,10 +8,9 @@ WIDTH, HEIGHT = 800, 800
 
 # Background Colour
 BACKGROUND = (135, 206, 235)
-#(135, 206, 235)
+
 # Line Colour
 LINE_COLOUR = (25, 25, 112)
-# (25, 25, 112)
 
 # The number of iterations to perform
 ITERATIONS = 7
@@ -25,23 +24,22 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Koch Snowflake Construction")
 window.fill(BACKGROUND)
 
-
-def distance(point1, point2):
+def distance(point1: tuple[int, int], point2: tuple[int, int]) -> float:
     """Calculate the distance between two points."""
     return math.sqrt((point2[0] - point1[0]) ** 2 + (point2[1] - point1[1]) ** 2)
 
 
-def koch_snowflake(order, points, surface):
+def koch_snowflake(order: int, points: list[tuple[int, int]], surface: pygame.Surface) -> None:
     """
     Recursively draw the Koch snowflake.
 
-    Args:
-        order: The current depth of recursion.
-        points: A list of points representing the current curve.
-        surface: The pygame surface to draw on.
+    order: The current depth of recursion.
+    points: A list of points representing the current curve.
+    surface: The pygame surface to draw on.
     """
     if order == 0:
         # Draw a line between consecutive points
+        # The last argument represents the thickness of the lines
         for i in range(len(points) - 1):
             pygame.draw.line(surface, LINE_COLOUR, points[i], points[i + 1], 2)
     else:
@@ -112,5 +110,6 @@ def animate_koch_snowflake(iterations):
 
 ################################################################################
 
-# Run the animation
-animate_koch_snowflake(ITERATIONS)
+if __name__ == '__main__':
+    # Run the animation
+    animate_koch_snowflake(ITERATIONS)

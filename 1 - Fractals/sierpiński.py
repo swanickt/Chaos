@@ -35,7 +35,6 @@ def sierpinski(vertices: list[tuple[int, int]], depth: int, frame: pygame.Surfac
             [(vertices[1][0] + vertices[2][0]) / 2, (vertices[1][1] + vertices[2][1]) / 2],
             [(vertices[2][0] + vertices[0][0]) / 2, (vertices[2][1] + vertices[0][1]) / 2],
         ]
-
         # Draw smaller triangles
         sierpinski([vertices[0], midpoints[0], midpoints[2]], depth - 1, frame)
         sierpinski([midpoints[0], vertices[1], midpoints[1]], depth - 1, frame)
@@ -73,7 +72,7 @@ def sierpinski_animation(iterations: int) -> None:
     pygame.quit()
 
 ################################################################################
+if __name__ == '__main__':
 
-
-# Run the animation with a maximum depth of ITERATIONS
-sierpinski_animation(ITERATIONS)
+    # Run the animation with a maximum depth of ITERATIONS
+    sierpinski_animation(ITERATIONS)

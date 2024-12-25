@@ -1,75 +1,75 @@
 import pygame
-
-# Initialize Pygame
-pygame.init()
+import colorsys
 
 # Screen dimensions
-WIDTH, HEIGHT = 711, 711
+WIDTH, HEIGHT = 800, 800
 
-# Colours
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+# Mandelbrot parameters
+MAX_ITER = 100
+ZOOM = 200  # Pixels per unit in the complex plane
+CENTER_X, CENTER_Y = -0.5, 0  # Center of the complex plane
 
-# Background Colour
-BACKGROUND = (11, 61, 145)
 
-# Colour for Triangles
-TRIANGLE_COLOUR = (255, 20, 147)
+def mandelbrot(c):
+    """
+    Calculate the escape time for a complex number c in the Mandelbrot set.
+    Returns the number of iterations before escape (or MAX_ITER if it doesn't escape).
+    """
+    z = 0
+    for n in range(MAX_ITER):
+        z = z**2 + c
+        if abs(z) > 2:
+            return n + 1 - (abs(z) - 2) / 2  # Smooth iteration count
+    return MAX_ITER
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Sierpiński Triangle Construction")
-screen.fill(BACKGROUND)
 
-# Colours
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+def hsv_to_rgb(h, s, v):
+    """
+    Convert HSV to RGB.
+    """
+    return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
 
-# Recursive function to draw the Sierpiński triangle
-def draw_sierpinski(vertices, depth, screen):
-    if depth == 0:
-        pygame.draw.polygon(screen, TRIANGLE_COLOUR, vertices)
-    else:
-        # Calculate midpoints of the triangle's edges
-        midpoints = [
-            [(vertices[0][0] + vertices[1][0]) / 2, (vertices[0][1] + vertices[1][1]) / 2],
-            [(vertices[1][0] + vertices[2][0]) / 2, (vertices[1][1] + vertices[2][1]) / 2],
-            [(vertices[2][0] + vertices[0][0]) / 2, (vertices[2][1] + vertices[0][1]) / 2],
-        ]
 
-        # Draw smaller triangles
-        draw_sierpinski([vertices[0], midpoints[0], midpoints[2]], depth - 1, screen)
-        draw_sierpinski([midpoints[0], vertices[1], midpoints[1]], depth - 1, screen)
-        draw_sierpinski([midpoints[2], midpoints[1], vertices[2]], depth - 1, screen)
+def draw_mandelbrot(screen):
+    """
+    Draw the Mandelbrot set on the Pygame screen.
+    """
+    for x in range(WIDTH):
+        for y in range(HEIGHT):
+            # Map pixel to the complex plane
+            a = (x - WIDTH / 2) / ZOOM + CENTER_X
+            b = (y - HEIGHT / 2) / ZOOM + CENTER_Y
+            c = complex(a, b)
 
-# Animation function
-def animate_sierpinski(max_depth):
+            # Calculate escape time
+            m = mandelbrot(c)
+
+            # Map escape time to hue
+            hue = m / MAX_ITER
+            color = hsv_to_rgb(hue, 1, 1) if m < MAX_ITER else (0, 0, 0)
+
+            # Draw the pixel
+            screen.set_at((x, y), color)
+
+
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Mandelbrot Set with Hue Coloring")
+
+    # Draw the Mandelbrot set
+    draw_mandelbrot(screen)
+    pygame.display.flip()
+
+    # Event loop to keep the window open
     running = True
-    clock = pygame.time.Clock()
-    depth = 0  # Start with depth 0
-
-    # Define the initial large triangle vertices
-    vertices = [
-        (WIDTH / 2, 50),                 # Top vertex
-        (50, HEIGHT - 50),              # Bottom-left vertex
-        (WIDTH - 50, HEIGHT - 50),      # Bottom-right vertex
-    ]
-
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.fill(BACKGROUND)  # Clear the screen
-        draw_sierpinski(vertices, depth, screen)  # Draw the triangle up to the current depth
-        pygame.display.flip()  # Update the display
-
-        depth += 1  # Increment depth for the next frame
-        if depth > max_depth:
-            depth = max_depth  # Stop at the maximum depth
-
-        clock.tick(1)  # Limit updates to 1 frame per second
-
     pygame.quit()
 
-# Run the animation with a maximum depth of 8
-animate_sierpinski(8)
+
+if __name__ == "__main__":
+    main()
