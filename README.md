@@ -24,4 +24,5 @@ is completed but for now, here are my favourite images generated throughout the 
 <img src="./3 - Chaos Games/Images/purple_prime_8.png" alt="Mandelbrot" width="500" height="500">
 
 <img src="./1 - Fractals/Images/sierpinski.gif" alt="Mandelbrot" width="500" height="500">
+
 <img src="./1 - Fractals/Images/koch.gif" alt="Mandelbrot" width="500" height="500">
