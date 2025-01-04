@@ -36,7 +36,7 @@ for i in range(799999):
     x.append(new_dot[0])
     y.append(new_dot[1])
 
-
+plt.figure(figsize=(10, 10), dpi=300)
 plt.scatter(x, y, s=0.00095, c='blueviolet')
 plt.axis("on")
 plt.show()

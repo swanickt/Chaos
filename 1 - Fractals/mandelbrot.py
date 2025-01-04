@@ -79,7 +79,7 @@ def main():
     for x in range(WIDTH):
         for y in range(HEIGHT):
             # Map pixel coordinates to complex plane
-            real = (x / WIDTH) * 3.5 - 2.5      # real axis will range in [-2.5, 0.5]
+            real = (x / WIDTH ) * 3.5 - 2.5      # real axis will range in [-2.5, 0.5]
             imaginary = (y / WIDTH) * 3.2 - 1.7         # imaginary axis will range in [-1.7, 1.5]
             c = complex(real, imaginary)
 
