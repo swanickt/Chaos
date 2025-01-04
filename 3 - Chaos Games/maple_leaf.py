@@ -29,7 +29,7 @@ for i in range(0, 999999):
     x.append(new_dot[0])
     y.append(new_dot[1])
 
-plt.figure(figsize=(10, 10), dpi=300)
+plt.figure(figsize=(10, 8), dpi=300)
 plt.scatter(x, y, s=0.00095, c='red')
 plt.axis("on")
 plt.show()
