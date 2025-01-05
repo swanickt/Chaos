@@ -6,7 +6,7 @@ mathematics required to understand the intricacies of these constructions will b
 or completely swept under the rug.
 
 This README will be updated to explain the overall process of these constructions when the project
-is completed but for now, you may check out the various python scripts, the chapter 1 notebook and my favourite images 
+is completed but for now, you may check out the various python scripts, the chapter 1 notebook, and my favourite images 
 generated throughout the project up until now:
 
 <img src="./1 - Fractals/Images/mandelbrot.png" alt="Mandelbrot" width="500" height="500">
